@@ -1,0 +1,179 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    <h1 class="hero-title">Find Your Perfect Home</h1>
+    <p class="hero-subtitle">Discover thousands of rental properties that match your lifestyle</p>
+    <div class="hero-actions">
+      <a routerLink="/login" class="btn btn-primary btn-lg">
+        <span class="material-icons">search</span>
+        Browse Properties
+      </a>
+      <a routerLink="/register" class="btn btn-outline btn-lg">
+        <span class="material-icons">person_add</span>
+        Get Started
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+  <div class="container">
+    <h2 class="section-title">Why Choose OHRTMS?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <span class="material-icons">verified</span>
+        </div>
+        <h3>Verified Properties</h3>
+        <p>All properties are verified by our team to ensure quality and authenticity</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <span class="material-icons">search</span>
+        </div>
+        <h3>Smart Search</h3>
+        <p>Find your perfect home with advanced filters and search options</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <span class="material-icons">security</span>
+        </div>
+        <h3>Secure Booking</h3>
+        <p>Safe and secure booking process with transparent communication</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <span class="material-icons">support_agent</span>
+        </div>
+        <h3>24/7 Support</h3>
+        <p>Our dedicated support team is always here to help you</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Properties Section -->
+<section class="featured-properties">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Featured Properties</h2>
+      <a routerLink="/login" class="view-all-link">
+        View All
+        <span class="material-icons">arrow_forward</span>
+      </a>
+    </div>
+
+    @if (loading) {
+      <div class="loading-container">
+        <div class="spinner"></div>
+      </div>
+    } @else if (featuredProperties.length > 0) {
+      <div class="properties-grid">
+        @for (property of featuredProperties; track property.id) {
+          <div class="property-card">
+            <div class="property-image">
+              <img 
+                [src]="getImageUrl(property.primary_image || property.images?.[0])" 
+                [alt]="property.title"
+              />
+              <div class="property-badge">{{ property.property_type }}</div>
+            </div>
+            
+            <div class="property-content">
+              <h3 class="property-title">{{ property.title }}</h3>
+              
+              <div class="property-location">
+                <span class="material-icons">location_on</span>
+                {{ property.city }}, {{ property.state }}
+              </div>
+
+              <div class="property-details">
+                <span class="detail-item">
+                  <span class="material-icons">bed</span>
+                  {{ property.bedrooms }} Beds
+                </span>
+                <span class="detail-item">
+                  <span class="material-icons">bathtub</span>
+                  {{ property.bathrooms }} Baths
+                </span>
+                @if (property.area_sqft) {
+                  <span class="detail-item">
+                    <span class="material-icons">square_foot</span>
+                    {{ property.area_sqft }} sqft
+                  </span>
+                }
+              </div>
+
+              <div class="property-footer">
+                <div class="property-price">
+                  ₹{{ property.rent_amount | number }}<span>/month</span>
+                </div>
+                <a routerLink="/login" class="btn btn-primary btn-sm">
+                  View Details
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="no-properties">
+        <span class="material-icons">home</span>
+        <p>No properties available at the moment</p>
+        <a routerLink="/register" class="btn btn-primary">List Your Property</a>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works">
+  <div class="container">
+    <h2 class="section-title">How It Works</h2>
+    
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Search Properties</h3>
+        <p>Browse through our extensive list of properties or use filters to find what you need</p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Contact Owner</h3>
+        <p>Send booking requests directly to property owners with your preferred move-in date</p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Get Approved</h3>
+        <p>Wait for owner approval and communicate directly through our platform</p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Move In</h3>
+        <p>Complete the formalities and move into your new home hassle-free</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Ready to Find Your Dream Home?</h2>
+      <p>Join thousands of happy tenants who found their perfect property through OHRTMS</p>
+      <div class="cta-actions">
+        <a routerLink="/login" class="btn btn-primary btn-lg">Start Searching</a>
+        <a routerLink="/register" class="btn btn-secondary btn-lg">List Your Property</a>
+      </div>
+    </div>
+  </div>
+</section>

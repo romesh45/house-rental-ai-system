@@ -1,0 +1,58 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <p>Online House Rental & Tenant Management System</p>
+      <h1>Welcome Back</h1>
+      <p>Sign in to your account</p>
+    </div>
+
+    @if (error) {
+      <div class="alert alert-error">{{ error }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          [(ngModel)]="credentials.email" 
+          name="email"
+          placeholder="Enter your email"
+          required
+          email
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          [(ngModel)]="credentials.password" 
+          name="password"
+          placeholder="Enter your password"
+          required
+          minlength="6"
+        />
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn btn-primary w-full" 
+        [disabled]="loading || !loginForm.form.valid"
+      >
+        @if (loading) {
+          <span class="spinner"></span>
+          Signing In...
+        } @else {
+          Sign In
+        }
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Don't have an account? <a routerLink="/register">Sign Up</a></p>
+    </div>
+  </div>
+</div>

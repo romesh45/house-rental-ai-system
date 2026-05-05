@@ -1,0 +1,114 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <p>Online House Rental & Tenant Management System</p>
+      <h1>Create Account</h1>
+      <p>Join OHRTMS today</p>
+    </div>
+
+    @if (error) {
+      <div class="alert alert-error">{{ error }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <div class="form-group">
+        <label class="form-label">Full Name *</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          [(ngModel)]="registerData.full_name" 
+          name="full_name"
+          placeholder="Enter your full name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email *</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          [(ngModel)]="registerData.email" 
+          name="email"
+          placeholder="Enter your email"
+          required
+          email
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input 
+          type="tel" 
+          class="form-control" 
+          [(ngModel)]="registerData.phone" 
+          name="phone"
+          placeholder="Enter your phone number"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password *</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          [(ngModel)]="registerData.password" 
+          name="password"
+          placeholder="Create a password (min 6 characters)"
+          required
+          minlength="6"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">I am a *</label>
+        <div class="role-selection">
+          <label class="role-option">
+            <input 
+              type="radio" 
+              name="role" 
+              value="tenant"
+              [(ngModel)]="registerData.role"
+            />
+            <div class="role-card">
+              <span class="material-icons">person</span>
+              <span>Tenant</span>
+              <small>Looking for property</small>
+            </div>
+          </label>
+
+          <label class="role-option">
+            <input 
+              type="radio" 
+              name="role" 
+              value="owner"
+              [(ngModel)]="registerData.role"
+            />
+            <div class="role-card">
+              <span class="material-icons">home_work</span>
+              <span>Owner</span>
+              <small>List my property</small>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn btn-primary w-full" 
+        [disabled]="loading || !registerForm.form.valid"
+      >
+        @if (loading) {
+          <span class="spinner"></span>
+          Creating Account...
+        } @else {
+          Create Account
+        }
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a routerLink="/login">Sign In</a></p>
+    </div>
+  </div>
+</div>

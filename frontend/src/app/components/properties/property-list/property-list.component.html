@@ -1,0 +1,166 @@
+<div class="property-list-container">
+  <div class="container">
+    <!-- Header -->
+    <div class="page-header">
+      <div>
+        <h1>Available Properties</h1>
+        <p>Find your perfect home from our listings</p>
+      </div>
+      <button class="btn btn-primary" (click)="toggleFilters()">
+        <span class="material-icons">filter_list</span>
+        {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+      </button>
+    </div>
+
+    <!-- Filters -->
+    @if (showFilters) {
+      <div class="filters-card">
+        <h3>Search Filters</h3>
+        <div class="filters-grid">
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="filters.city"
+              placeholder="Enter city name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Property Type</label>
+            <select class="form-select" [(ngModel)]="filters.property_type">
+              <option value="">All Types</option>
+              <option value="apartment">Apartment</option>
+              <option value="house">House</option>
+              <option value="villa">Villa</option>
+              <option value="studio">Studio</option>
+              <option value="penthouse">Penthouse</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Min Rent</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              [(ngModel)]="filters.minRent"
+              placeholder="Min rent"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Max Rent</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              [(ngModel)]="filters.maxRent"
+              placeholder="Max rent"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Bedrooms</label>
+            <select class="form-select" [(ngModel)]="filters.bedrooms">
+              <option [value]="undefined">Any</option>
+              <option [value]="1">1+</option>
+              <option [value]="2">2+</option>
+              <option [value]="3">3+</option>
+              <option [value]="4">4+</option>
+            </select>
+          </div>
+        </div>
+
+        @if (amenities.length > 0) {
+          <div class="amenities-filter">
+            <label class="form-label">Amenities</label>
+            <div class="amenities-grid">
+              @for (amenity of amenities; track amenity.id) {
+                <label class="checkbox-label">
+                  <input 
+                    type="checkbox" 
+                    [checked]="filters.amenities?.includes(amenity.id)"
+                    (change)="onAmenityChange(amenity.id, $any($event.target).checked)"
+                  />
+                  <span>{{ amenity.name }}</span>
+                </label>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="filter-actions">
+          <button class="btn btn-primary" (click)="applyFilters()">Apply Filters</button>
+          <button class="btn btn-outline" (click)="clearFilters()">Clear All</button>
+        </div>
+      </div>
+    }
+
+    <!-- Properties Grid -->
+    @if (loading) {
+      <div class="loading-container">
+        <div class="spinner"></div>
+        <p>Loading properties...</p>
+      </div>
+    } @else if (properties.length > 0) {
+      <div class="results-info">
+        <p>{{ properties.length }} properties found</p>
+      </div>
+      <div class="properties-grid">
+        @for (property of properties; track property.id) {
+          <div class="property-card">
+            <div class="property-image">
+              <img 
+                [src]="property.primary_image || property.images?.[0] || 'assets/images/no-image.svg'" 
+                [alt]="property.title"
+              />
+              <div class="property-badge">{{ property.property_type }}</div>
+            </div>
+            
+            <div class="property-content">
+              <h3 class="property-title">{{ property.title }}</h3>
+              
+              <div class="property-location">
+                <span class="material-icons">location_on</span>
+                {{ property.city }}, {{ property.state }}
+              </div>
+
+              <div class="property-details">
+                <span class="detail-item">
+                  <span class="material-icons">bed</span>
+                  {{ property.bedrooms }} Beds
+                </span>
+                <span class="detail-item">
+                  <span class="material-icons">bathtub</span>
+                  {{ property.bathrooms }} Baths
+                </span>
+                @if (property.area_sqft) {
+                  <span class="detail-item">
+                    <span class="material-icons">square_foot</span>
+                    {{ property.area_sqft }} sqft
+                  </span>
+                }
+              </div>
+
+              <div class="property-footer">
+                <div class="property-price">
+                  ₹{{ property.rent_amount | number }}<span>/month</span>
+                </div>
+                <a [routerLink]="['/properties', property.id]" class="btn btn-primary btn-sm">
+                  View Details
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="no-properties">
+        <span class="material-icons">home</span>
+        <h3>No Properties Found</h3>
+        <p>Try adjusting your search filters</p>
+        <button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#F9FAFB"/>
+  
+  <!-- Border -->
+  <rect x="1" y="1" width="798" height="598" fill="none" stroke="#E5E7EB" stroke-width="2"/>
+  
+  <!-- Image icon -->
+  <rect x="275" y="225" width="250" height="150" fill="none" stroke="#9CA3AF" stroke-width="3" rx="8"/>
+  <circle cx="350" cy="290" r="20" fill="#9CA3AF"/>
+  <path d="M275 350 L350 300 L425 340 L500 280 L525 350" fill="none" stroke="#9CA3AF" stroke-width="3"/>
+  
+  <!-- Text -->
+  <text x="400" y="450" font-family="Inter, system-ui, sans-serif" font-size="22" fill="#6B7280" text-anchor="middle">No Image Available</text>
+</svg>

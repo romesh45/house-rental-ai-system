@@ -1,0 +1,262 @@
+.property-details-container {
+  padding: 2rem 0 4rem;
+  min-height: calc(100vh - 140px);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+.back-link:hover {
+  color: var(--primary-color);
+}
+
+.property-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.property-header h1 {
+  margin-bottom: 0.75rem;
+}
+
+.property-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+}
+
+.property-price-large {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  white-space: nowrap;
+}
+
+.property-price-large span {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.images-gallery {
+  margin-bottom: 3rem;
+}
+
+.main-image {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.main-image img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 2rem;
+}
+
+.details-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detail-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.detail-card h2 {
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.feature-item .material-icons {
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.feature-item strong {
+  display: block;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.feature-item span {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.amenities-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.amenity-item .material-icons {
+  color: var(--success-color);
+  font-size: 1.25rem;
+}
+
+.details-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-card,
+.info-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 90px;
+}
+
+.contact-card h3 {
+  margin-bottom: 1.5rem;
+}
+
+.owner-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+}
+
+.owner-info .material-icons {
+  font-size: 2.5rem;
+  color: var(--text-secondary);
+}
+
+.owner-info strong {
+  display: block;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.owner-info p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.booking-form {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.booking-form h4 {
+  margin-bottom: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.info-card .info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-item span {
+  color: var(--text-secondary);
+}
+
+.info-item strong {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+}
+
+.no-property {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.no-property .material-icons {
+  font-size: 5rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .property-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-image img {
+    height: 300px;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .amenities-list {
+    grid-template-columns: 1fr;
+  }
+}

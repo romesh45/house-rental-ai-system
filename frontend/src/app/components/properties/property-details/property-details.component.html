@@ -1,0 +1,190 @@
+<div class="property-details-container">
+  @if (loading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+    </div>
+  } @else if (property) {
+    <div class="container">
+      <!-- Back Button -->
+      <a routerLink="/login" class="back-link">
+        <span class="material-icons">arrow_back</span>
+        Back to Properties
+      </a>
+
+      <!-- Property Header -->
+      <div class="property-header">
+        <div>
+          <h1>{{ property.title }}</h1>
+          <div class="property-location">
+            <span class="material-icons">location_on</span>
+            {{ property.address }}, {{ property.city }}, {{ property.state }} - {{ property.pincode }}
+          </div>
+        </div>
+        <div class="property-price-large">
+          ₹{{ property.rent_amount | number }}<span>/month</span>
+        </div>
+      </div>
+
+      <!-- Images Gallery -->
+      @if (property.images && property.images.length > 0) {
+        <div class="images-gallery">
+          <div class="main-image">
+            <img [src]="getImageUrl(property.images[0])" [alt]="property.title" />
+          </div>
+        </div>
+      }
+
+      <div class="details-grid">
+        <!-- Main Details -->
+        <div class="details-main">
+          <!-- Key Features -->
+          <div class="detail-card">
+            <h2>Property Details</h2>
+            <div class="features-grid">
+              <div class="feature-item">
+                <span class="material-icons">bed</span>
+                <div>
+                  <strong>{{ property.bedrooms }}</strong>
+                  <span>Bedrooms</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <span class="material-icons">bathtub</span>
+                <div>
+                  <strong>{{ property.bathrooms }}</strong>
+                  <span>Bathrooms</span>
+                </div>
+              </div>
+              @if (property.area_sqft) {
+                <div class="feature-item">
+                  <span class="material-icons">square_foot</span>
+                  <div>
+                    <strong>{{ property.area_sqft }}</strong>
+                    <span>Sq. Ft.</span>
+                  </div>
+                </div>
+              }
+              <div class="feature-item">
+                <span class="material-icons">home</span>
+                <div>
+                  <strong class="capitalize">{{ property.property_type }}</strong>
+                  <span>Type</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          @if (property.description) {
+            <div class="detail-card">
+              <h2>Description</h2>
+              <p>{{ property.description }}</p>
+            </div>
+          }
+
+          <!-- Amenities -->
+          @if (property.amenities && property.amenities.length > 0) {
+            <div class="detail-card">
+              <h2>Amenities</h2>
+              <div class="amenities-list">
+                @for (amenity of property.amenities; track amenity.id) {
+                  <div class="amenity-item">
+                    <span class="material-icons">check_circle</span>
+                    {{ amenity.name }}
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Sidebar -->
+        <div class="details-sidebar">
+          <!-- Contact Card -->
+          <div class="contact-card">
+            <h3>Property Owner</h3>
+            <div class="owner-info">
+              <span class="material-icons">person</span>
+              <div>
+                <strong>{{ property.owner_name }}</strong>
+                @if (property.owner_phone) {
+                  <p>{{ property.owner_phone }}</p>
+                }
+              </div>
+            </div>
+
+            @if (authService.isTenant) {
+              @if (!showBookingForm) {
+                <button class="btn btn-primary w-full" (click)="toggleBookingForm()">
+                  <span class="material-icons">calendar_today</span>
+                  Request Booking
+                </button>
+              } @else {
+                <div class="booking-form">
+                  <h4>Booking Request</h4>
+                  
+                  @if (bookingSuccess) {
+                    <div class="alert alert-success">
+                      Booking request submitted successfully!
+                    </div>
+                  }
+                  
+                  @if (bookingError) {
+                    <div class="alert alert-error">{{ bookingError }}</div>
+                  }
+
+                  <div class="form-group">
+                    <label class="form-label">Move-in Date</label>
+                    <input 
+                      type="date" 
+                      class="form-control" 
+                      [(ngModel)]="bookingData.move_in_date"
+                      [min]="minDate"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Message (Optional)</label>
+                    <textarea 
+                      class="form-control" 
+                      [(ngModel)]="bookingData.message"
+                      placeholder="Add any message for the owner..."
+                      rows="3"
+                    ></textarea>
+                  </div>
+
+                  <div class="form-actions">
+                    <button class="btn btn-primary" (click)="submitBooking()">Submit</button>
+                    <button class="btn btn-outline" (click)="toggleBookingForm()">Cancel</button>
+                  </div>
+                </div>
+              }
+            } @else if (!authService.isLoggedIn) {
+              <a routerLink="/login" class="btn btn-primary w-full">
+                Login to Book
+              </a>
+            }
+          </div>
+
+          <!-- Security Deposit -->
+          @if (property.security_deposit) {
+            <div class="info-card">
+              <div class="info-item">
+                <span>Security Deposit</span>
+                <strong>₹{{ property.security_deposit | number }}</strong>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="container">
+      <div class="no-property">
+        <span class="material-icons">error_outline</span>
+        <h3>Property Not Found</h3>
+        <a routerLink="/login" class="btn btn-primary">Back to Properties</a>
+      </div>
+    </div>
+  }
+</div>
