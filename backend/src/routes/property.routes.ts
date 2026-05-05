@@ -7,7 +7,6 @@ const router = express.Router();
 
 // Public routes
 router.get('/', PropertyController.getAll);
-router.get('/:id', PropertyController.getById);
 
 // Protected routes - Owner only
 router.post(
@@ -25,6 +24,8 @@ router.get(
   roleMiddleware('owner', 'admin'),
   PropertyController.getMyProperties
 );
+
+router.get('/:id', PropertyController.getById);
 
 router.put(
   '/:id',
