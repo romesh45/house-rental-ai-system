@@ -1,203 +1,220 @@
-# Online House Rental & Tenant Management System
+# 🏠 Online House Rental & Tenant Management System
 
-## 📌 Project Overview
-
-The **Online House Rental & Tenant Management System** is a full-stack web application that provides a digital platform for property owners to list rental houses and for tenants to search, view, and request bookings for available properties. The system streamlines the rental process by automating property management, booking workflows, and tenant–owner interactions.
-
-This project is developed as an academic capstone and follows real-world full-stack application architecture.
+A full-stack web application that connects property owners and tenants — owners can list and manage rental properties, tenants can search, view, and book them. Built as a team academic capstone project.
 
 ---
 
-## 🎯 Objective
+## 🛠️ Tech Stack
 
-To develop a secure, scalable, and user-friendly rental management system where:
-
-* Property owners can manage rental listings and tenant requests
-* Tenants can search and book rental properties efficiently
-* The system ensures proper validation, role-based access, and data integrity
+| Layer | Technology |
+|---|---|
+| Frontend | Angular 20, Angular Material |
+| Backend | Node.js, TypeScript, Express.js |
+| Database | MySQL 8.x |
+| Authentication | JWT (JSON Web Tokens) + bcryptjs |
+| File Uploads | Multer |
+| Validation | express-validator |
 
 ---
 
-## 👥 User Roles
+## ✨ Features
 
-### 🏠 Owner
-
-* Add new property listings
-* Update and manage listed properties
-* View tenant booking requests
-* Approve or reject booking requests
-* View tenant details for approved bookings
+### 🏠 Property Owner
+- Register and log in as a property owner
+- Add new rental property listings with images
+- Edit and delete existing listings
+- View all incoming tenant booking requests
+- Approve or reject booking requests
+- View tenant contact details for approved bookings
 
 ### 👤 Tenant
+- Register and log in as a tenant
+- Browse all available rental properties
+- Filter properties by city, rent range, type, bedrooms, and amenities
+- View full property details with images and amenities
+- Submit booking requests with preferred move-in date and message
+- Track booking request status (Pending / Approved / Rejected / Cancelled)
 
-* Browse available rental properties
-* View detailed property information
-* Search and filter properties
-* Submit booking requests
-* Track booking request status
-
-### 🛡️ Admin (Optional)
-
-* Monitor users and property listings
-* View basic system analytics
-* Oversee platform activities
-
----
-
-## 🏘️ Property Listing & Search
-
-### Property Details Include:
-
-* Property photos (stored as file paths or URLs)
-* Rent amount
-* Location
-* Amenities (AC, Wi-Fi, Parking, etc.)
-
-### Tenant Features:
-
-* Browse all available properties
-* Search and filter properties by:
-
-  * Location
-  * Budget
-  * Amenities
-
-### UI Pages:
-
-* **Property Listing Page** – Displays all available properties
-* **Property Details Page** – Shows property details, images, and booking option
+### 🔐 Authentication & Security
+- Role-based access control (Owner / Tenant / Admin)
+- JWT token authentication with expiry
+- Protected routes via Angular route guards
+- Passwords hashed with bcryptjs
 
 ---
 
-## 📑 Tenant Management & Booking
-
-* Tenants can submit booking requests for selected properties
-* Owners can approve or reject booking requests
-* Tenants can view booking status:
-
-  * Pending
-  * Approved
-  * Rejected
-* Owners can view tenant details for approved bookings
-
-### UI Pages:
-
-* **Tenant Booking Page** – Submit booking requests
-* **Owner Dashboard** – Manage properties and tenant bookings
-
----
-
-## 🖥️ Frontend (Angular 18)
-
-* Developed using **Angular 18**
-* Uses **Angular Material** for UI components
-* Modular and component-based architecture
-
-### Key Components:
-
-* `PropertyListComponent` – Display all properties
-* `PropertyDetailsComponent` – Show property details and booking option
-* `BookingRequestComponent` – Submit booking requests
-* `OwnerDashboardComponent` – Manage properties and tenant requests
-
-### Application Routes:
-
-| Path                   | Component                | Description                  |
-| ---------------------- | ------------------------ | ---------------------------- |
-| `/properties`          | PropertyListComponent    | Browse all properties        |
-| `/properties/:id`      | PropertyDetailsComponent | View property details        |
-| `/properties/:id/book` | BookingRequestComponent  | Submit booking request       |
-| `/owner/dashboard`     | OwnerDashboardComponent  | Manage properties & bookings |
+## 📁 Project Structure
+```
+├── backend/
+│   └── src/
+│       ├── config/         # Database connection pool
+│       ├── controllers/    # Route handler logic
+│       ├── middleware/     # Auth, error handling, file upload
+│       ├── models/         # MySQL query methods
+│       ├── routes/         # API route definitions
+│       └── server.ts       # Express app entry point
+├── frontend/
+│   └── src/app/
+│       ├── components/     # Standalone Angular components
+│       ├── guards/         # Route guards (auth, owner, tenant)
+│       ├── interceptors/   # HTTP interceptor for JWT headers
+│       ├── models/         # TypeScript interfaces
+│       ├── modules/        # Lazy-loaded owner and tenant modules
+│       └── services/       # API service layer
+└── README.md
+```
 
 ---
 
-## 🛠️ Backend (Node.js + TypeScript)
+## ⚙️ Prerequisites
 
-* Node.js with **TypeScript**
-* Express.js RESTful APIs
-* MySQL database integration
-* Input validation and exception handling
-* Role-based API access control
+Make sure you have the following installed:
 
----
+- [Node.js](https://nodejs.org/) v18 or higher
+- [MySQL](https://www.mysql.com/) 8.x
+- [Angular CLI](https://angular.io/cli) v20
 
-## 🗄️ Database Structure (MySQL)
-
-### Properties Table
-
-* `id`
-* `owner_id`
-* `title`
-* `description`
-* `rent`
-* `location`
-* `amenities`
-* `photos`
-* `created_at`
-
-### Bookings Table
-
-* `id`
-* `property_id`
-* `tenant_id`
-* `status` (Pending / Approved / Rejected)
-* `request_time`
-
-> A simple relational mapping is maintained between **Properties** and **Bookings** tables.
+```bash
+npm install -g @angular/cli
+```
 
 ---
 
-## ✅ Validation Rules
+## 🚀 Installation & Setup
 
-* Property title and location must not be empty
-* Rent amount must be greater than zero
-* Booking requests must contain valid property and tenant data
-* Booking status must be one of:
+### 1. Clone the repository
 
-  * Pending
-  * Approved
-  * Rejected
-* All validations ensure data integrity and correct workflow
+```bash
+git clone https://github.com/your-username/Online-House-Rental-Tenant-Management-System.git
+cd Online-House-Rental-Tenant-Management-System
+```
+
+### 2. Set up the database
+
+Open MySQL and run the schema file:
+
+```bash
+mysql -u root -p < backend/src/database/schema.sql
+```
+
+This will create the database, all tables, default amenities, and a default admin user.
+
+> **Default Admin Credentials**
+> Email: `admin@ohrtms.com`
+> Password: `admin123`
+
+### 3. Configure backend environment
+
+```bash
+cd backend
+cp .env.example .env
+```
+
+Edit `.env` and fill in your MySQL credentials and a strong JWT secret:
+```
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=rental_property_db
+JWT_SECRET=your_strong_secret_key_here
+```
+
+### 4. Install backend dependencies
+
+```bash
+cd backend
+npm install
+```
+
+### 5. Install frontend dependencies
+
+```bash
+cd frontend
+npm install
+```
 
 ---
 
-## 🔐 Role-Based Access Control
+## ▶️ Running the Project
 
-* Implemented using **Angular Route Guards**
-* Access restrictions:
+### Start the backend server
 
-  * **Tenant** → Property browsing and booking features
-  * **Owner** → Property and booking management
-  * **Admin** → System monitoring (if enabled)
-* Unauthorized access redirects users to login or access-denied pages
+```bash
+cd backend
+npm run dev
+```
 
----
+Backend runs at: `http://localhost:5000`
 
-## ⚠️ Exception Handling
+### Start the frontend
 
-* Graceful error handling in frontend and backend
-* Meaningful error messages displayed in the UI
-* Server-side error logging for debugging
-* Proper HTTP status codes for all API responses
+```bash
+cd frontend
+npm start
+```
 
----
+Frontend runs at: `http://localhost:4200`
 
-## 🔔 Notifications & Status Updates
-
-* Success notifications on booking submission
-* Real-time booking status updates for tenants upon owner action
+> Make sure both are running at the same time.
 
 ---
 
-## 👥 Team Contribution (Team Size: 4)
+## 🔌 API Endpoints
 
-* Backend and frontend development were carried out collaboratively.
-* Functional analysis, validation logic, and documentation were handled as shared responsibilities.
-* UI/UX refinements, testing, and workflow verification were jointly managed.
-* Deployment readiness and project review preparation were completed as a team.
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Login and receive JWT |
+| GET | `/api/auth/profile` | Get current user profile |
+| PUT | `/api/auth/profile` | Update profile |
+
+### Properties
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/properties` | Get all available properties |
+| GET | `/api/properties/:id` | Get property by ID |
+| GET | `/api/properties/my/properties` | Get owner's listings |
+| POST | `/api/properties` | Create new property (owner) |
+| PUT | `/api/properties/:id` | Update property (owner) |
+| DELETE | `/api/properties/:id` | Delete property (owner) |
+
+### Bookings
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/bookings` | Create booking request (tenant) |
+| GET | `/api/bookings/my-bookings` | Tenant's own bookings |
+| GET | `/api/bookings/received` | Owner's received bookings |
+| PUT | `/api/bookings/:id/status` | Approve / reject / cancel |
+| DELETE | `/api/bookings/:id` | Delete booking |
 
 ---
 
-## 📜 Conclusion
+## 📸 Screenshots
 
-The Online House Rental & Tenant Management System provides an efficient digital solution for managing rental properties and tenant bookings. The project demonstrates practical implementation of full-stack development concepts, role-based access control, and real-world rental workflows aligned with academic and industry standards.
+> Screenshots are located in `Project Documentation/Screenshot/`
+
+| Page | Description |
+|------|-------------|
+| Home | Landing page with property search |
+| Property Listing | Browse all available properties |
+| Property Details | Full details with images and booking option |
+| Owner Dashboard | Manage listings and booking requests |
+| Tenant Dashboard | Track booking statuses |
+
+---
+
+## 👥 Contributors
+
+| Name | GitHub | Role |
+|------|--------|------|
+| Contributor 1 | — | Backend & Database |
+| Romeshwar K | [@romesh45](https://github.com/romesh45) | Backend fixes, security improvements, documentation |
+| Contributor 3 | — | Frontend Development |
+| Contributor 4 | — | UI/UX & Testing |
+
+---
+
+## 📄 License
+
+This project was developed as an academic capstone project at K. Ramakrishnan College of Engineering.
