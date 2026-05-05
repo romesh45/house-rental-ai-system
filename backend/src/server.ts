@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 // Allow requests from frontend
 app.use(cors({
-  origin: ['http://localhost:4200', 'http://localhost:56870', 'http://localhost:*'],
+  origin: ['http://localhost:4200', 'http://localhost:56870'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
