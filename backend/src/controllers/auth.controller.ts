@@ -46,7 +46,7 @@ export class AuthController {
       const token = jwt.sign(
         { id: userId, email, role: role || 'tenant' },
         jwtSecret,
-        { expiresIn: process.env.JWT_EXPIRE || '7d' } as jwt.SignOptions
+        { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as jwt.SignOptions
       );
 
       const user = await UserModel.findById(userId);
@@ -58,7 +58,10 @@ export class AuthController {
       });
     } catch (error: any) {
       console.error('Register error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
@@ -85,7 +88,7 @@ export class AuthController {
       const token = jwt.sign(
         { id: user.id, email: user.email, role: user.role },
         jwtSecret,
-        { expiresIn: process.env.JWT_EXPIRE || '7d' } as jwt.SignOptions
+        { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as jwt.SignOptions
       );
 
       const { password: _, ...userWithoutPassword } = user;
@@ -97,7 +100,10 @@ export class AuthController {
       });
     } catch (error: any) {
       console.error('Login error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
@@ -111,7 +117,10 @@ export class AuthController {
       res.json({ user });
     } catch (error: any) {
       console.error('Get profile error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
@@ -132,7 +141,10 @@ export class AuthController {
       res.json({ message: 'Profile updated successfully', user });
     } catch (error: any) {
       console.error('Update profile error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 }
