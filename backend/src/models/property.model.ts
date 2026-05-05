@@ -190,9 +190,11 @@ export class PropertyModel {
   static async addAmenities(propertyId: number, amenityIds: number[]): Promise<void> {
     if (amenityIds.length === 0) return;
 
-    const values = amenityIds.map(amenityId => `(${propertyId}, ${amenityId})`).join(',');
+    const placeholders = amenityIds.map(() => '(?, ?)').join(',');
+    const values = amenityIds.flatMap(amenityId => [propertyId, amenityId]);
     await pool.execute(
-      `INSERT INTO property_amenities (property_id, amenity_id) VALUES ${values}`
+      `INSERT INTO property_amenities (property_id, amenity_id) VALUES ${placeholders}`,
+      values
     );
   }
 

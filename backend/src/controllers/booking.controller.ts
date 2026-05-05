@@ -50,7 +50,10 @@ export class BookingController {
       });
     } catch (error: any) {
       console.error('Create booking error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
@@ -64,7 +67,10 @@ export class BookingController {
       });
     } catch (error: any) {
       console.error('Get my bookings error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
@@ -78,13 +84,19 @@ export class BookingController {
       });
     } catch (error: any) {
       console.error('Get received bookings error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
   static async updateStatus(req: AuthRequest, res: Response) {
     try {
       const bookingId = parseInt(req.params.id);
+      if (isNaN(bookingId)) {
+        return res.status(400).json({ message: 'Invalid booking ID' });
+      }
       const { status } = req.body;
 
       if (!['approved', 'rejected', 'cancelled'].includes(status)) {
@@ -115,13 +127,19 @@ export class BookingController {
       });
     } catch (error: any) {
       console.error('Update booking status error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
   static async delete(req: AuthRequest, res: Response) {
     try {
       const bookingId = parseInt(req.params.id);
+      if (isNaN(bookingId)) {
+        return res.status(400).json({ message: 'Invalid booking ID' });
+      }
       const booking = await BookingModel.findById(bookingId);
 
       if (!booking) {
@@ -137,7 +155,10 @@ export class BookingController {
       res.json({ message: 'Booking deleted successfully' });
     } catch (error: any) {
       console.error('Delete booking error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 }

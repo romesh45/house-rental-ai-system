@@ -58,7 +58,10 @@ export class PropertyController {
       });
     } catch (error: any) {
       console.error('Create property error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
@@ -82,13 +85,20 @@ export class PropertyController {
       });
     } catch (error: any) {
       console.error('Get properties error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
   static async getById(req: AuthRequest, res: Response) {
     try {
-      const property = await PropertyModel.findById(parseInt(req.params.id));
+      const propertyId = parseInt(req.params.id);
+      if (isNaN(propertyId)) {
+        return res.status(400).json({ message: 'Invalid property ID' });
+      }
+      const property = await PropertyModel.findById(propertyId);
 
       if (!property) {
         return res.status(404).json({ message: 'Property not found' });
@@ -97,7 +107,10 @@ export class PropertyController {
       res.json({ property });
     } catch (error: any) {
       console.error('Get property error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
@@ -111,13 +124,19 @@ export class PropertyController {
       });
     } catch (error: any) {
       console.error('Get my properties error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
   static async update(req: AuthRequest, res: Response) {
     try {
       const propertyId = parseInt(req.params.id);
+      if (isNaN(propertyId)) {
+        return res.status(400).json({ message: 'Invalid property ID' });
+      }
       const property = await PropertyModel.findById(propertyId);
 
       if (!property) {
@@ -147,13 +166,19 @@ export class PropertyController {
       });
     } catch (error: any) {
       console.error('Update property error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
   static async delete(req: AuthRequest, res: Response) {
     try {
       const propertyId = parseInt(req.params.id);
+      if (isNaN(propertyId)) {
+        return res.status(400).json({ message: 'Invalid property ID' });
+      }
       const property = await PropertyModel.findById(propertyId);
 
       if (!property) {
@@ -169,13 +194,19 @@ export class PropertyController {
       res.json({ message: 'Property deleted successfully' });
     } catch (error: any) {
       console.error('Delete property error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 
   static async uploadImages(req: AuthRequest, res: Response) {
     try {
       const propertyId = parseInt(req.params.id);
+      if (isNaN(propertyId)) {
+        return res.status(400).json({ message: 'Invalid property ID' });
+      }
       const property = await PropertyModel.findById(propertyId);
 
       if (!property) {
@@ -204,7 +235,10 @@ export class PropertyController {
       });
     } catch (error: any) {
       console.error('Upload images error:', error);
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({
+        message: 'Server error',
+        ...(process.env.NODE_ENV === 'development' && { error: error.message })
+      });
     }
   }
 }
