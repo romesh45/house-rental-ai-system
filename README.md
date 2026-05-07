@@ -1,66 +1,86 @@
-# 🏠 Online House Rental & Tenant Management System
+# 🏠 House Rental AI System
 
-A full-stack web application that connects property owners and tenants — owners can list and manage rental properties, tenants can search, view, and book them. Built as a team academic capstone project.
+An AI-enhanced full-stack web application for property rental management. This project extends a team capstone system with three individual AI features — rent price prediction, smart property recommendations, and an LLM-powered chatbot.
 
 ---
 
-## 🛠️ Tech Stack
+## 📌 Project Background
+
+This project was originally developed as a team academic capstone during a 6-month industrial training program at K. Ramakrishnan College of Engineering. The base system (Angular frontend + Node.js backend + MySQL database) was built collaboratively by a team of 4.
+
+I ([@romesh45](https://github.com/romesh45)) am contributor #2 on the original team repo. In this personal repository, I have extended the base system with three original AI features as my individual contribution.
+
+---
+
+## 🤖 AI Features (Individual Contribution)
+
+### Feature 1 — AI Rent Price Predictor
+- Predicts fair monthly rent for any property in India
+- Uses **Random Forest Regressor** (scikit-learn) trained on 1000 synthetic data points
+- Inputs: city, bedrooms, bathrooms, area, furnishing status, amenities
+- Outputs: predicted rent, ±₹5,000 expected range, feature importance chart
+- Shows model accuracy (R² score) and RMSE in sidebar
+- Built with **Streamlit**
+
+### Feature 2 — Smart Property Recommender
+- Recommends best matching properties based on tenant preferences
+- Uses **Cosine Similarity** with **MinMaxScaler** normalization
+- Inputs: city, property type, bedrooms, bathrooms, area, budget, amenities, furnishing
+- Outputs: top 5 matching properties with match score and progress bar
+- Built with **Streamlit**
+
+### Feature 3 — AI Property Chatbot
+- Conversational assistant for property queries
+- Powered by **Groq API** with **LLaMA 3.3 70B** model (free tier)
+- RAG-style context injection with property knowledge base
+- Quick question buttons, full chat history, clear chat option
+- Built with **Streamlit**
+
+---
+
+## 🛠️ Full Tech Stack
 
 | Layer | Technology |
 |---|---|
 | Frontend | Angular 20, Angular Material |
 | Backend | Node.js, TypeScript, Express.js |
 | Database | MySQL 8.x |
-| Authentication | JWT (JSON Web Tokens) + bcryptjs |
+| Authentication | JWT + bcryptjs |
 | File Uploads | Multer |
-| Validation | express-validator |
-
----
-
-## ✨ Features
-
-### 🏠 Property Owner
-- Register and log in as a property owner
-- Add new rental property listings with images
-- Edit and delete existing listings
-- View all incoming tenant booking requests
-- Approve or reject booking requests
-- View tenant contact details for approved bookings
-
-### 👤 Tenant
-- Register and log in as a tenant
-- Browse all available rental properties
-- Filter properties by city, rent range, type, bedrooms, and amenities
-- View full property details with images and amenities
-- Submit booking requests with preferred move-in date and message
-- Track booking request status (Pending / Approved / Rejected / Cancelled)
-
-### 🔐 Authentication & Security
-- Role-based access control (Owner / Tenant / Admin)
-- JWT token authentication with expiry
-- Protected routes via Angular route guards
-- Passwords hashed with bcryptjs
+| AI - ML Models | Python, scikit-learn, Random Forest, Cosine Similarity |
+| AI - LLM | Groq API, LLaMA 3.3 70B |
+| AI - Interface | Streamlit |
+| Data Processing | pandas, numpy, matplotlib |
 
 ---
 
 ## 📁 Project Structure
 ```
-├── backend/
+house-rental-ai-system/
+├── backend/                        # Node.js + TypeScript REST API
 │   └── src/
-│       ├── config/         # Database connection pool
-│       ├── controllers/    # Route handler logic
-│       ├── middleware/     # Auth, error handling, file upload
-│       ├── models/         # MySQL query methods
-│       ├── routes/         # API route definitions
-│       └── server.ts       # Express app entry point
-├── frontend/
+│       ├── config/                 # Database connection
+│       ├── controllers/            # Route handlers
+│       ├── middleware/             # Auth, error, upload
+│       ├── models/                 # MySQL query methods
+│       └── routes/                 # API routes
+├── frontend/                       # Angular 20 SPA
 │   └── src/app/
-│       ├── components/     # Standalone Angular components
-│       ├── guards/         # Route guards (auth, owner, tenant)
-│       ├── interceptors/   # HTTP interceptor for JWT headers
-│       ├── models/         # TypeScript interfaces
-│       ├── modules/        # Lazy-loaded owner and tenant modules
-│       └── services/       # API service layer
+│       ├── components/             # Standalone components
+│       ├── guards/                 # Route guards
+│       ├── interceptors/           # JWT interceptor
+│       ├── models/                 # TypeScript interfaces
+│       ├── modules/                # Lazy loaded modules
+│       └── services/               # API services
+├── ai/                             # AI features (individual contribution)
+│   ├── feature1_rent_predictor/    # Random Forest rent predictor
+│   │   ├── data_generator.py       # Synthetic data generation
+│   │   └── app.py                  # Streamlit app
+│   ├── feature2_recommender/       # Cosine similarity recommender
+│   │   └── app.py                  # Streamlit app
+│   ├── feature3_chatbot/           # Groq LLM chatbot
+│   │   └── app.py                  # Streamlit app
+│   └── requirements.txt            # Python dependencies
 └── README.md
 ```
 
@@ -68,94 +88,79 @@ A full-stack web application that connects property owners and tenants — owner
 
 ## ⚙️ Prerequisites
 
-Make sure you have the following installed:
-
-- [Node.js](https://nodejs.org/) v18 or higher
-- [MySQL](https://www.mysql.com/) 8.x
-- [Angular CLI](https://angular.io/cli) v20
-
-```bash
-npm install -g @angular/cli
-```
+- Node.js v18+
+- MySQL 8.x
+- Python 3.10+
+- Angular CLI v20
+- Groq API key (free at [console.groq.com](https://console.groq.com))
 
 ---
 
-## 🚀 Installation & Setup
+## 🚀 Setup — Base System
 
-### 1. Clone the repository
-
+### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/Online-House-Rental-Tenant-Management-System.git
-cd Online-House-Rental-Tenant-Management-System
+git clone https://github.com/romesh45/house-rental-ai-system.git
+cd house-rental-ai-system
 ```
 
 ### 2. Set up the database
-
-Open MySQL and run the schema file:
-
 ```bash
 mysql -u root -p < backend/src/database/schema.sql
 ```
 
-This will create the database, all tables, default amenities, and a default admin user.
-
-> **Default Admin Credentials**
-> Email: `admin@ohrtms.com`
-> Password: `admin123`
-
 ### 3. Configure backend environment
-
 ```bash
 cd backend
 cp .env.example .env
+# Edit .env with your MySQL credentials and JWT secret
 ```
 
-Edit `.env` and fill in your MySQL credentials and a strong JWT secret:
-```
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=rental_property_db
-JWT_SECRET=your_strong_secret_key_here
-```
-
-### 4. Install backend dependencies
-
+### 4. Install and run backend
 ```bash
 cd backend
 npm install
+npm run dev
+# Runs on http://localhost:5000
 ```
 
-### 5. Install frontend dependencies
-
+### 5. Install and run frontend
 ```bash
 cd frontend
 npm install
+npm start
+# Runs on http://localhost:4200
 ```
 
 ---
 
-## ▶️ Running the Project
+## 🤖 Setup — AI Features
 
-### Start the backend server
-
+### Install Python dependencies
 ```bash
-cd backend
-npm run dev
+cd ai
+pip install -r requirements.txt
 ```
 
-Backend runs at: `http://localhost:5000`
-
-### Start the frontend
-
+### Feature 1 — Rent Price Predictor
 ```bash
-cd frontend
-npm start
+cd ai/feature1_rent_predictor
+python data_generator.py       # generates rental_data.csv
+streamlit run app.py           # runs on http://localhost:8501
 ```
 
-Frontend runs at: `http://localhost:4200`
+### Feature 2 — Property Recommender
+```bash
+cd ai/feature2_recommender
+streamlit run app.py           # runs on http://localhost:8502
+```
 
-> Make sure both are running at the same time.
+### Feature 3 — AI Chatbot
+```bash
+# Add your Groq API key to ai/feature3_chatbot/.env
+cd ai/feature3_chatbot
+streamlit run app.py           # runs on http://localhost:8503
+```
 
 ---
 
@@ -164,28 +169,28 @@ Frontend runs at: `http://localhost:4200`
 ### Auth
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/auth/register` | Register a new user |
-| POST | `/api/auth/login` | Login and receive JWT |
-| GET | `/api/auth/profile` | Get current user profile |
+| POST | `/api/auth/register` | Register new user |
+| POST | `/api/auth/login` | Login and get JWT |
+| GET | `/api/auth/profile` | Get current user |
 | PUT | `/api/auth/profile` | Update profile |
 
 ### Properties
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/properties` | Get all available properties |
+| GET | `/api/properties` | Get all properties |
 | GET | `/api/properties/:id` | Get property by ID |
-| GET | `/api/properties/my/properties` | Get owner's listings |
-| POST | `/api/properties` | Create new property (owner) |
-| PUT | `/api/properties/:id` | Update property (owner) |
-| DELETE | `/api/properties/:id` | Delete property (owner) |
+| GET | `/api/properties/my/properties` | Owner's listings |
+| POST | `/api/properties` | Create property |
+| PUT | `/api/properties/:id` | Update property |
+| DELETE | `/api/properties/:id` | Delete property |
 
 ### Bookings
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/bookings` | Create booking request (tenant) |
-| GET | `/api/bookings/my-bookings` | Tenant's own bookings |
+| POST | `/api/bookings` | Create booking request |
+| GET | `/api/bookings/my-bookings` | Tenant's bookings |
 | GET | `/api/bookings/received` | Owner's received bookings |
-| PUT | `/api/bookings/:id/status` | Approve / reject / cancel |
+| PUT | `/api/bookings/:id/status` | Update booking status |
 | DELETE | `/api/bookings/:id` | Delete booking |
 
 ---
@@ -198,9 +203,11 @@ Frontend runs at: `http://localhost:4200`
 |------|-------------|
 | Home | Landing page with property search |
 | Property Listing | Browse all available properties |
-| Property Details | Full details with images and booking option |
+| Property Details | Full details with images and booking |
 | Owner Dashboard | Manage listings and booking requests |
-| Tenant Dashboard | Track booking statuses |
+| Rent Predictor | AI rent prediction with feature importance |
+| Recommender | Top 5 matching properties with match score |
+| Chatbot | Conversational property assistant |
 
 ---
 
@@ -208,13 +215,19 @@ Frontend runs at: `http://localhost:4200`
 
 | Name | GitHub | Role |
 |------|--------|------|
-| Contributor 1 | — | Backend & Database |
-| Romeshwar K | [@romesh45](https://github.com/romesh45) | Backend fixes, security improvements, documentation |
-| Contributor 3 | — | Frontend Development |
-| Contributor 4 | — | UI/UX & Testing |
+| Team Member 1 | — | Backend & Database |
+| Romeshwar K | [@romesh45](https://github.com/romesh45) | Bug fixes, security improvements, AI features, documentation |
+| Team Member 3 | — | Frontend Development |
+| Team Member 4 | — | UI/UX & Testing |
+
+---
+
+## 🧠 CV Description
+
+> "House Rental AI System — Extended a team capstone project with three AI features: rent price prediction using Random Forest (scikit-learn), smart property recommendation using cosine similarity, and an LLM-powered chatbot using Groq API with LLaMA 3.3 70B. Individual AI contribution built on top of a full-stack Angular + Node.js + MySQL base system."
 
 ---
 
 ## 📄 License
 
-This project was developed as an academic capstone project at K. Ramakrishnan College of Engineering.
+This project was developed as part of academic training at K. Ramakrishnan College of Engineering.
