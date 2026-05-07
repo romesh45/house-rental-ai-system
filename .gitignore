@@ -1,5 +1,6 @@
 # Environment variables
 backend/.env
+ai/feature3_chatbot/.env
 
 # Dependencies
 node_modules/
