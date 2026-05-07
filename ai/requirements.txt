@@ -1,0 +1,14 @@
+# AI Feature Dependencies
+# Feature 1 - Rent Price Predictor
+numpy==1.26.4
+pandas==2.2.1
+scikit-learn==1.4.1
+streamlit==1.43.0
+matplotlib==3.8.3
+
+# Feature 2 - Property Recommender
+# (uses same dependencies as Feature 1)
+
+# Feature 3 - AI Chatbot
+groq==1.2.0
+python-dotenv==1.0.1
